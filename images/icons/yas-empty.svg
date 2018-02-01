@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="18px" viewBox="0 0 12 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>6F2AD072-2E4C-4EA4-BA90-FF5582433E1C</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M6,18 C9.3137085,18 12,15.1793939 12,11.7 C12,7.16178255 7,4 6,0 C4.98925781,4 0,7.16178255 0,11.7 C0,15.1793939 2.6862915,18 6,18 Z" id="path-1"></path>
+    </defs>
+    <g id="Nano-grafin_Raduga_site_v01_05/01" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-630.000000, -281.000000)">
+        <g id="Icon/drop/yas" transform="translate(630.000000, 281.000000)">
+            <g>
+                <use class="drop__fill" fill="transparent" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <path class="drop__border" stroke="#ccc" stroke-width="2" d="M5.99805079,2.57748741 C5.60195881,3.26633664 5.0906121,4.01140579 4.43130857,4.89829233 C4.28885547,5.08991838 4.31208743,5.0589699 3.88795415,5.62311941 C1.74006178,8.48008077 1,9.88203926 1,11.7 C1,14.6377273 3.24978356,17 6,17 C8.75021644,17 11,14.6377273 11,11.7 C11,9.88513562 10.2601861,8.48443182 8.11446337,5.63221521 C7.68582543,5.06244532 7.70837188,5.09246246 7.56407423,4.89841924 C6.90501296,4.01215137 6.39376275,3.26689244 5.99805079,2.57748741 Z"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -44,22 +44,22 @@
                         </g>
                         <path d="M72,35 C101.284672,35 120.954199,32.4160393 132.494423,27.8836663 C140.733365,24.6478573 144,20.8238345 144,17 C144,8.58704951 111.25006,1 72,1 C32.7499398,1 -4.54969395e-13,8.58704951 -4.54969395e-13,17 C-4.54969395e-13,21.2166534 3.17772141,25.0058594 11.4973504,28.1889183 C22.8920042,32.5484701 42.5245704,35 72,35 Z" stroke="#C8C8C8" stroke-width="2" mask="url(#mask-2)"></path>
                     </g>
-                    <g id="Cover-L">
-                        <g id="Combined-Shape">
+                    <g class="cover" id="Cover-L">
+                        <g class="cover__shadow" id="Combined-Shape">
                             <use fill="black" fill-opacity="1" filter="url(#filter-7)" xlink:href="#path-6"></use>
                             <use fill="#C8C8C8" fill-rule="evenodd" xlink:href="#path-6"></use>
                         </g>
-                        <g id="Combined-Shape">
+                        <g class="cover__material" id="Combined-Shape">
                             <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-8"></use>
                             <path stroke="#EAEAEA" stroke-width="1" d="M71.5,33.4980132 L71.5,0.501195158 C32.2490984,0.626494432 0.5,8.15600654 0.5,16.9996042 C0.5,25.8432018 32.2490984,33.3727139 71.5,33.4980132 Z"></path>
                         </g>
                     </g>
-                    <g id="Cover-R" transform="translate(192.000000, 0.000000)">
-                        <g id="Combined-Shape" transform="translate(36.000000, 18.999604) scale(-1, 1) translate(-36.000000, -18.999604) ">
+                    <g class="cover" id="Cover-R" transform="translate(192.000000, 0.000000)">
+                        <g class="cover__shadow" id="Combined-Shape" transform="translate(36.000000, 18.999604) scale(-1, 1) translate(-36.000000, -18.999604) ">
                             <use fill="black" fill-opacity="1" filter="url(#filter-10)" xlink:href="#path-9"></use>
                             <use fill="#C8C8C8" fill-rule="evenodd" xlink:href="#path-9"></use>
                         </g>
-                        <g id="Combined-Shape" transform="translate(36.000000, 16.999604) scale(-1, 1) translate(-36.000000, -16.999604) ">
+                        <g class="cover__material" id="Combined-Shape" transform="translate(36.000000, 16.999604) scale(-1, 1) translate(-36.000000, -16.999604) ">
                             <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-11"></use>
                             <path stroke="#EAEAEA" stroke-width="1" d="M71.5,33.4980132 L71.5,0.501195158 C32.2490984,0.626494432 0.5,8.15600654 0.5,16.9996042 C0.5,25.8432018 32.2490984,33.3727139 71.5,33.4980132 Z"></path>
                         </g>
