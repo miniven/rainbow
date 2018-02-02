@@ -23581,8 +23581,8 @@ $(function () {
 
 					setTimeout(function () {
 						$('.explode__inner').addClass('explode__inner--fully-active');
-					}, 500);
-				}, 500);
+					}, 1000);
+				}, 1000);
 			} else {
 				$('.explode__inner').removeClass('explode__inner--active');
 				$('.explode__inner').removeClass('explode__inner--fully-active');
