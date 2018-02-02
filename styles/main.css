@@ -1,4 +1,10 @@
 @charset "UTF-8";
+@media (min-width: 2000px) {
+  .wrapper {
+    max-width: 2000px !important;
+  }
+}
+
 @media (min-width: 544px) {
   .col-sm-offset-reset {
     margin-left: 0;
@@ -2968,6 +2974,9 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   font-family: "Roboto", sans-serif;
   font-display: swap;
   font-size: 1rem;
@@ -3062,6 +3071,12 @@ body {
   }
 }
 
+.section__header--absolute {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
 .section__header-text, .section__header-button {
   display: none;
 }
@@ -3074,6 +3089,18 @@ body {
 
 .section__footer {
   padding: 1.5vw 0;
+}
+
+.section__inner--absolute {
+  position: absolute;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  width: 100%;
 }
 
 .section__inner--stretch {
@@ -3112,6 +3139,7 @@ body {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+  height: 100vh;
 }
 
 .section__wrapper {
@@ -3661,6 +3689,12 @@ body {
 
 .slider--pricelist {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 @media (min-width: 992px) {
@@ -3732,7 +3766,7 @@ body {
   content: '';
   position: absolute;
   left: 0;
-  top: 7vw;
+  top: 13vw;
   width: 600%;
   -webkit-transition: 0.48s ease;
   transition: 0.48s ease;
@@ -3972,6 +4006,12 @@ body {
 @media (min-width: 992px) {
   .card__label {
     font-size: 1.429em;
+  }
+}
+
+@media (min-width: 2000px) {
+  .card__label {
+    left: 4vw;
   }
 }
 
@@ -4326,6 +4366,11 @@ body {
   font-family: "Roboto", sans-serif;
   font-display: swap;
   background-color: #fff;
+}
+
+.form--cart {
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 .form__header {
