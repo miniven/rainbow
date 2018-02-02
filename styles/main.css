@@ -3626,30 +3626,454 @@ body {
   color: #cb0028;
 }
 
-@media (min-width: 992px) {
-  .explode:after {
-    content: '';
-    display: block;
-    height: 5vw;
-    width: 100%;
-    background-image: url("/images/product/explode/butilka-razbor-ten.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
+.explode {
+  position: relative;
+  height: 0;
+  padding-top: 20%;
 }
 
-.explode__img {
-  width: 100%;
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
+.explode__inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-transform: translateX(-6%);
+          transform: translateX(-6%);
 }
 
-@media (min-width: 992px) {
-  .explode__img {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
-  }
+.explode__inner--active .explode__butilka {
+  -webkit-transform: translateX(69%);
+          transform: translateX(69%);
+}
+
+.explode__inner--active .explode__korpus-1 {
+  -webkit-transform: translateX(180%);
+          transform: translateX(180%);
+}
+
+.explode__inner--active .explode__korpus {
+  -webkit-transform: translateX(252%);
+          transform: translateX(252%);
+}
+
+.explode__inner--active .explode__layer-16 {
+  -webkit-transform: translateX(245%);
+          transform: translateX(245%);
+}
+
+.explode__inner--active .explode__batareika-01--top {
+  -webkit-transform: translateX(263%);
+          transform: translateX(263%);
+}
+
+.explode__inner--active .explode__batareika-01--bottom {
+  -webkit-transform: translateX(265%);
+          transform: translateX(265%);
+}
+
+.explode__inner--active .explode__batareika-02--top {
+  -webkit-transform: translateX(244%);
+          transform: translateX(244%);
+}
+
+.explode__inner--active .explode__batareika-02--bottom {
+  -webkit-transform: translateX(250%);
+          transform: translateX(250%);
+}
+
+.explode__inner--active .explode__batareika-03--top {
+  -webkit-transform: translateX(270%);
+          transform: translateX(270%);
+}
+
+.explode__inner--active .explode__dathik-01 {
+  -webkit-transform: translateX(1170%);
+          transform: translateX(1170%);
+}
+
+.explode__inner--active .explode__dathik-02 {
+  -webkit-transform: translateX(2130%);
+          transform: translateX(2130%);
+}
+
+.explode__inner--active .explode__svet {
+  -webkit-transform: translateX(222%);
+          transform: translateX(222%);
+}
+
+.explode__inner--active .explode__karkac {
+  -webkit-transform: translateX(67%);
+          transform: translateX(67%);
+}
+
+.explode__inner--active .explode__voronka {
+  -webkit-transform: translateX(-73%);
+          transform: translateX(-73%);
+}
+
+.explode__inner--active .explode__filtr-6 {
+  -webkit-transform: translateX(-280%);
+          transform: translateX(-280%);
+}
+
+.explode__inner--active .explode__filtr-5 {
+  -webkit-transform: translateX(-222%);
+          transform: translateX(-222%);
+}
+
+.explode__inner--active .explode__filtr-4 {
+  -webkit-transform: translateX(-300%);
+          transform: translateX(-300%);
+}
+
+.explode__inner--active .explode__filtr-3 {
+  -webkit-transform: translateX(-300%);
+          transform: translateX(-300%);
+}
+
+.explode__inner--active .explode__filtr-2 {
+  -webkit-transform: translateX(-400%);
+          transform: translateX(-400%);
+}
+
+.explode__inner--active .explode__filtr-1 {
+  -webkit-transform: translateX(-400%);
+          transform: translateX(-400%);
+}
+
+.explode__inner--active .explode__krihka-niz {
+  -webkit-transform: translateX(-277%);
+          transform: translateX(-277%);
+}
+
+.explode__inner--active .explode__krihka-verx {
+  -webkit-transform: translateX(-222%);
+          transform: translateX(-222%);
+}
+
+.explode__inner--active .explode__kolba-niz-copy-2 {
+  -webkit-transform: translateX(-210%);
+          transform: translateX(-210%);
+}
+
+.explode__inner--active .explode__kolba-verx {
+  -webkit-transform: translateX(-88%);
+          transform: translateX(-88%);
+}
+
+.explode__inner--active .explode__kolpahek-niz {
+  -webkit-transform: translateX(-302%);
+          transform: translateX(-302%);
+}
+
+.explode__inner--active .explode__kolpahek-verx {
+  -webkit-transform: translateX(-348%);
+          transform: translateX(-348%);
+}
+
+.explode__inner--active .explode__tubus-niz {
+  -webkit-transform: translateX(-185%);
+          transform: translateX(-185%);
+}
+
+.explode__inner--active .explode__tubus-verx {
+  -webkit-transform: translateX(-185%);
+          transform: translateX(-185%);
+}
+
+.explode__inner--fully-active .explode__voronka {
+  -webkit-transform: translateX(-20%);
+          transform: translateX(-20%);
+}
+
+.explode__inner--fully-active .explode__filtr-5 {
+  -webkit-transform: translateX(-287%);
+          transform: translateX(-287%);
+}
+
+.explode__inner--fully-active .explode__filtr-4 {
+  -webkit-transform: translateX(-353%);
+          transform: translateX(-353%);
+}
+
+.explode__inner--fully-active .explode__filtr-3 {
+  -webkit-transform: translateX(-416%);
+          transform: translateX(-416%);
+}
+
+.explode__inner--fully-active .explode__filtr-2 {
+  -webkit-transform: translateX(-678%);
+          transform: translateX(-678%);
+}
+
+.explode__inner--fully-active .explode__filtr-1 {
+  -webkit-transform: translateX(-732%);
+          transform: translateX(-732%);
+}
+
+.explode__inner--fully-active .explode__krihka-niz {
+  -webkit-transform: translateX(-457%);
+          transform: translateX(-457%);
+}
+
+.explode__inner--fully-active .explode__krihka-verx {
+  -webkit-transform: translateX(-345%);
+          transform: translateX(-345%);
+}
+
+.explode__inner--fully-active .explode__layer-16 {
+  -webkit-transform: translateX(235%) translateY(-109%);
+          transform: translateX(235%) translateY(-109%);
+}
+
+.explode__inner--fully-active .explode__batareika-01--top {
+  -webkit-transform: translateX(263%) translateY(-288%);
+          transform: translateX(263%) translateY(-288%);
+}
+
+.explode__inner--fully-active .explode__batareika-01--bottom {
+  -webkit-transform: translateX(265%) translateY(141%);
+          transform: translateX(265%) translateY(141%);
+}
+
+.explode__inner--fully-active .explode__batareika-02--top {
+  -webkit-transform: translateX(244%) translateY(-410%);
+          transform: translateX(244%) translateY(-410%);
+}
+
+.explode__inner--fully-active .explode__batareika-02--bottom {
+  -webkit-transform: translateX(250%) translateY(100%);
+          transform: translateX(250%) translateY(100%);
+}
+
+.explode__inner--fully-active .explode__batareika-03--top {
+  -webkit-transform: translateX(270%) translateY(-314%);
+          transform: translateX(270%) translateY(-314%);
+}
+
+.explode__inner--fully-active .explode__dathik-01 {
+  -webkit-transform: translateX(1170%) translateY(33%);
+          transform: translateX(1170%) translateY(33%);
+}
+
+.explode__inner--fully-active .explode__dathik-02 {
+  -webkit-transform: translateX(2130%) translateY(70%);
+          transform: translateX(2130%) translateY(70%);
+}
+
+.explode__inner--fully-active .explode__svet {
+  -webkit-transform: translateX(222%) translateY(155%);
+          transform: translateX(222%) translateY(155%);
+}
+
+.explode__particle {
+  position: absolute;
+  -webkit-transition: 0.6s ease;
+  transition: 0.6s ease;
+}
+
+.explode__butilka {
+  top: 19%;
+  right: 17%;
+  height: 60%;
+  z-index: 0;
+}
+
+.explode__korpus-1 {
+  height: 44%;
+  top: 29%;
+  right: 40%;
+  z-index: 10;
+}
+
+.explode__korpus {
+  height: 45%;
+  top: 26%;
+  right: 42%;
+  z-index: 5;
+}
+
+.explode__layer-16 {
+  height: 19%;
+  top: 36%;
+  right: 43%;
+  z-index: 4;
+}
+
+.explode__batareika-01--top {
+  height: 8%;
+  right: 42.5%;
+  top: 32%;
+  z-index: 6;
+}
+
+.explode__batareika-01--bottom {
+  height: 8%;
+  right: 43%;
+  top: 59%;
+  z-index: 4;
+}
+
+.explode__batareika-02--top {
+  height: 8%;
+  right: 42%;
+  top: 31%;
+  z-index: 5;
+}
+
+.explode__batareika-02--bottom {
+  height: 8%;
+  right: 42.5%;
+  top: 59%;
+  z-index: 3;
+}
+
+.explode__batareika-03--top {
+  height: 8%;
+  right: 43%;
+  top: 32%;
+  z-index: 4;
+}
+
+.explode__dathik-01 {
+  height: 6%;
+  right: 43.5%;
+  top: 65%;
+  z-index: 10;
+}
+
+.explode__dathik-02 {
+  height: 5%;
+  right: 45.5%;
+  top: 65%;
+  z-index: 10;
+}
+
+.explode__svet {
+  height: 11.5%;
+  right: 39%;
+  top: 63%;
+  z-index: 20;
+}
+
+.explode__karkac {
+  height: 50%;
+  right: 39.5%;
+  top: 24%;
+  z-index: 50;
+}
+
+.explode__klho-vkl {
+  height: 50%;
+  right: 43%;
+  top: 24%;
+  z-index: 60;
+}
+
+.explode__voronka {
+  height: 41%;
+  right: 44.8%;
+  top: 29%;
+  z-index: 50;
+}
+
+.explode__filtr-6 {
+  height: 39%;
+  right: 48%;
+  top: 30%;
+  z-index: 45;
+}
+
+.explode__filtr-5 {
+  height: 39%;
+  right: 48%;
+  top: 30%;
+  z-index: 45;
+}
+
+.explode__filtr-4 {
+  height: 39%;
+  right: 48%;
+  top: 30%;
+  z-index: 45;
+}
+
+.explode__filtr-3 {
+  height: 39%;
+  right: 48%;
+  top: 30%;
+  z-index: 45;
+}
+
+.explode__filtr-2 {
+  height: 39%;
+  right: 48%;
+  top: 30%;
+  z-index: 45;
+}
+
+.explode__filtr-1 {
+  height: 39%;
+  right: 48%;
+  top: 30%;
+  z-index: 45;
+}
+
+.explode__krihka-niz {
+  height: 45%;
+  right: 48.5%;
+  top: 27%;
+  z-index: 45;
+}
+
+.explode__krihka-verx {
+  height: 45%;
+  right: 47%;
+  top: 27%;
+  z-index: 50;
+}
+
+.explode__kolba-niz-copy-2 {
+  height: 47%;
+  right: 42%;
+  top: 26%;
+  z-index: 50;
+}
+
+.explode__kolba-verx {
+  height: 49%;
+  right: 43.2%;
+  top: 25%;
+  z-index: 60;
+}
+
+.explode__kolpahek-niz {
+  height: 21%;
+  right: 53.5%;
+  top: 39%;
+  z-index: 40;
+}
+
+.explode__kolpahek-verx {
+  height: 21%;
+  right: 53.5%;
+  top: 39%;
+  z-index: 70;
+}
+
+.explode__tubus-niz {
+  height: 49.5%;
+  right: 39.3%;
+  top: 24.5%;
+  z-index: 40;
+}
+
+.explode__tubus-verx {
+  height: 49.5%;
+  right: 39.3%;
+  top: 24.5%;
+  z-index: 80;
 }
 
 .slider {

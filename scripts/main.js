@@ -23174,7 +23174,7 @@ var hideModal = function hideModal(node) {
 	node.classList.remove('modal--visible');
 };
 
-showModal(ageModal);
+// showModal(ageModal);
 
 document.addEventListener('mouseout', function (event) {
 	if (event.clientY < 0) {
@@ -23543,6 +23543,19 @@ $(function () {
 
 			(0, _stage.moveBottle)(nextIndex);
 			(0, _stage.toggleHole)(nextIndex);
+
+			if (nextIndex === 2) {
+				setTimeout(function () {
+					$('.explode__inner').addClass('explode__inner--active');
+
+					setTimeout(function () {
+						$('.explode__inner').addClass('explode__inner--fully-active');
+					}, 500);
+				}, 500);
+			} else {
+				$('.explode__inner').removeClass('explode__inner--active');
+				$('.explode__inner').removeClass('explode__inner--fully-active');
+			};
 		}
 	});
 
