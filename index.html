@@ -158,8 +158,9 @@
             <div class="container-fluid">
               <div class="row top-md">
                 <div class="col-xs-12 col-md-4 center-xs section__item section__item--visible-lg">
-                  <h2 class="subtitle">Ограниченная партия</h2>
+                  <h2 class="subtitle">Осталось всего</h2>
                   <p class="text text--huge text--bold text--center text--serif text--base-line text--red amount">0</p>
+                  <p class="text text--center text--serif text--base-line">нанографинов</p>
                   <button data-target=".section--pricelist" class="button button--red button--scroller">Купить</button>
                 </div>
                 <div class="col-xs-12 col-md-4 center-xs">
@@ -236,14 +237,14 @@
         </g>
     </g>
 </svg>
-                      </div><img src="/images/product/stage/bottle-raduga-05.png" alt="" class="stage__bottle"><img src="/images/product/stage/boks-podium.png" alt="" class="stage__front">
+                      </div><img src="/images/product/stage/bottle-raduga-05.png" alt="" class="stage__bottle"><img src="/images/product/stage/bottle-light-4.png" alt="" class="stage__light stage__light--pink"><img src="/images/product/stage/bottle-light-3.png" alt="" class="stage__light stage__light--purple"><img src="/images/product/stage/bottle-light-2.png" alt="" class="stage__light stage__light--red"><img src="/images/product/stage/bottle-light-1.png" alt="" class="stage__light stage__light--green"><img src="/images/product/stage/boks-podium.png" alt="" class="stage__front">
                     </figure>
                   </div>
                 </div>
                 <div class="col-xs-12 col-md-4 center-xs first-xs last-md">
                   <h1 class="subtitle section__item section__item--invisible-lg">Nano-графин RADUGA</h1>
                   <h2 class="subtitle section__item section__item--visible-lg">Сделать заказ </h2>
-                  <p class="text text--big text--center text--serif text--bold text--red text--base-line section__item section__item--visible-lg">8 800 250 00 00 <br><span class="text__part">или</span></p>
+                  <p class="text text--big text--center text--serif text--bold text--red section__item section__item--visible-lg">8 800 250 00 00 <br><span class="text__part">или</span></p>
                   <p class="text section__item section__item--invisible-lg">Первый в мире традиционный русский напиток с электронным нанофильтром, подсветкой и звуковыми эффектами.</p>
                   <button data-target=".section--pricelist" class="button button--red button--scroller">Купить на сайте</button>
                 </div>
@@ -746,9 +747,9 @@
                     <div class="col-xs-12 col-md-10">
                       <form action="/" class="form form--preorder">
                         <h3 class="modal__title subtitle subtitle--decorated subtitle--decor-white">Оформление заказа</h3>
-                        <input placeholder="ФИО" name="name" class="form__input">
-                        <input placeholder="Телефон" name="phone" class="form__input">
-                        <input type="email" placeholder="Email" name="email" class="form__input">
+                        <input required placeholder="ФИО" name="name" class="form__input">
+                        <input required placeholder="Телефон" name="phone" class="form__input">
+                        <input type="email" required placeholder="Email" name="email" class="form__input">
                         <input placeholder="Количество штук" name="amount" class="form__input form__input--amount">
                         <button data-target=".modal--preorder" class="form__submit button button--gold button--small">Заказать</button>
                       </form>
@@ -803,6 +804,28 @@
       </div>
     </div>
   </div>
+  <div class="modal modal--contact">
+    <div class="wrapper modal__wrapper">
+      <div class="row center-xs middle-xs">
+        <div class="col-xs-11 col-sm-7">
+          <div class="modal__window"><img src="/images/product/raduga@2x.png" alt="Nanografin RADUGA с содержимым" class="modal__image modal__image--centered">
+            <button data-target=".modal--contact" class="modal__close button button--close"></button>
+            <h2 class="modal__title subtitle subtitle--decorated subtitle--decor-blue">Написать изобретателю</h2>
+            <div class="row">
+              <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
+                <form action="/" class="form form--contact">
+                  <input required placeholder="ФИО" name="name" class="form__input">
+                  <input type="email" required placeholder="Email" name="email" class="form__input">
+                  <textarea placeholder="Текст" name="text" class="form__input"></textarea>
+                  <button data-target=".modal--contact" class="form__submit button button--blue">Отправить</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="modal modal--special">
     <div class="wrapper modal__wrapper">
       <div class="row center-xs middle-xs">
@@ -820,28 +843,6 @@
                   <p class="modal__promo-title text text--serif text--gold text--fit">MAGIC JAR TULIP</p>
                   <p class="text text--serif text--fit">скоро в продаже</p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal modal--contact">
-    <div class="wrapper modal__wrapper">
-      <div class="row center-xs middle-xs">
-        <div class="col-xs-11 col-sm-7">
-          <div class="modal__window"><img src="/images/product/raduga@2x.png" alt="Nanografin RADUGA с содержимым" class="modal__image modal__image--centered">
-            <button data-target=".modal--contact" class="modal__close button button--close"></button>
-            <h2 class="modal__title subtitle subtitle--decorated subtitle--decor-blue">Написать изобретателю</h2>
-            <div class="row">
-              <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
-                <form action="/" class="form form--contact">
-                  <input placeholder="ФИО" name="name" class="form__input">
-                  <input type="email" placeholder="Email" name="email" class="form__input">
-                  <textarea placeholder="Текст" name="text" class="form__input"></textarea>
-                  <button data-target=".modal--contact" class="form__submit button button--blue">Отправить</button>
-                </form>
               </div>
             </div>
           </div>

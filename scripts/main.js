@@ -22678,8 +22678,12 @@ function symbolObservablePonyfill(root) {
 var amountNode = document.querySelector('.amount');
 var amount = localStorage.amount || 23829;
 
-var addSpaceToNum = function addSpaceToNum(num) {
-	return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+var addLinesToNum = function addLinesToNum(num) {
+	var result = String(num).split('').map(function (digit) {
+		return '<span class="amount__box">' + digit + '</span>';
+	}).join('');
+
+	return result;
 };
 
 var getRandomInt = function getRandomInt(min, max) {
@@ -22695,13 +22699,13 @@ var count = function count() {
 		amount = amount - getRandomInt(1, 3);
 
 		localStorage.setItem('amount', amount);
-		amountNode.textContent = addSpaceToNum(amount);
+		amountNode.innerHTML = addLinesToNum(amount);
 
 		count();
 	}, interval);
 };
 
-amountNode.textContent = addSpaceToNum(amount);
+amountNode.innerHTML = addLinesToNum(amount);
 count();
 
 },{}],29:[function(require,module,exports){
@@ -23199,7 +23203,7 @@ var hideModal = function hideModal(node) {
 	node.classList.remove('modal--visible');
 };
 
-// showModal(ageModal);
+showModal(ageModal);
 
 document.addEventListener('mouseout', function (event) {
 	if (event.clientY < 0) {
@@ -23207,6 +23211,7 @@ document.addEventListener('mouseout', function (event) {
 		hideModal(thanksModal);
 		hideModal(preorderModal);
 		hideModal(offerModal);
+		hideModal(letterModal);
 		showModal(specialModal);
 	};
 });
@@ -23320,17 +23325,22 @@ var hole = (0, _jquery2.default)('.stage__hole svg');
 var coverLeft = hole.find('#Cover-L');
 var coverRight = hole.find('#Cover-R');
 var bottle = (0, _jquery2.default)('.stage__bottle');
+var bottleLights = (0, _jquery2.default)('.stage__light');
 
 var moveBottle = function moveBottle(nextIndex) {
 	if (nextIndex === 2) {
 		bottle.addClass('stage__bottle--moved');
+		bottleLights.addClass('stage__light--moved');
 
 		setTimeout(function () {
 			bottle.hide();
+			bottleLights.hide();
 		}, 300);
 	} else {
 		bottle.show();
+		bottleLights.show();
 		bottle.removeClass('stage__bottle--moved');
+		bottleLights.removeClass('stage__light--moved');
 	}
 };
 
@@ -23553,6 +23563,9 @@ $(function () {
 		return ids;
 	};
 
+	var explodeTimer = void 0;
+	var explodeTimerStepTwo = void 0;
+
 	$('#fullpage').fullpage({
 		anchors: getAnchors($('#navbar')),
 		menu: '#navbar',
@@ -23576,14 +23589,16 @@ $(function () {
 			(0, _stage.toggleHole)(nextIndex);
 
 			if (nextIndex === 2) {
-				setTimeout(function () {
+				explodeTimer = setTimeout(function () {
 					$('.explode__inner').addClass('explode__inner--active');
 
-					setTimeout(function () {
+					explodeTimerStepTwo = setTimeout(function () {
 						$('.explode__inner').addClass('explode__inner--fully-active');
 					}, 1000);
 				}, 1000);
 			} else {
+				clearTimeout(explodeTimer);
+				clearTimeout(explodeTimerStepTwo);
 				$('.explode__inner').removeClass('explode__inner--active');
 				$('.explode__inner').removeClass('explode__inner--fully-active');
 			};
