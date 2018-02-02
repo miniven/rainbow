@@ -22675,6 +22675,24 @@ function symbolObservablePonyfill(root) {
 },{}],28:[function(require,module,exports){
 'use strict';
 
+var amountNode = document.querySelector('.amount');
+var INITIAL_AMOUNT = 25000;
+
+var addSpaceToNum = function addSpaceToNum(num) {
+				return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+};
+
+fetch('http://localhost:88/product/amount').then(function (data) {
+				return data.json();
+}).then(function (data) {
+				return amountNode.textContent = addSpaceToNum(INITIAL_AMOUNT - data.amount);
+}).catch(function () {
+				return amountNode.textContent = addSpaceToNum(INITIAL_AMOUNT);
+});
+
+},{}],29:[function(require,module,exports){
+'use strict';
+
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
@@ -22686,10 +22704,18 @@ var _jquery2 = _interopRequireDefault(_jquery);
 
 var _reducers = require('../store/reducers');
 
+var _modal = require('../modal/modal');
+
+var _sliders = require('../sliders/sliders');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var buyButton = (0, _jquery2.default)('.button--buy');
+var closeModal = (0, _jquery2.default)('.modal__close');
 var scrollerButton = (0, _jquery2.default)('.button--scroller');
+var permissionButton = (0, _jquery2.default)('.modal__button--permission');
+var preorderButton = (0, _jquery2.default)('.modal__button--preorder');
+var offerButton = (0, _jquery2.default)('.modal__button--offer');
 
 var handleButtonVisibility = function handleButtonVisibility(state) {
 	if (state === 'HIDDEN') {
@@ -22706,12 +22732,52 @@ var valueSubscriber = _reducers.store.subscribe(function () {
 	handleButtonVisibility(_reducers.store.getState().button);
 });
 
+var closeClickHandler = function closeClickHandler(event) {
+	var targetModalSelector = (0, _jquery2.default)(event.target).data('target');
+	var targetModal = document.querySelector(targetModalSelector);
+
+	(0, _modal.hideModal)(targetModal);
+};
+
 handleButtonVisibility(_reducers.store.getState().button);
+
+closeModal.on('click', closeClickHandler);
+
+permissionButton.on('click', function (event) {
+	if (!event.target.dataset.allowed) {
+		// Если посетителю нет 18, то удаляем алкоголь, оставляем только графины //
+
+		(0, _sliders.removeSlide)(_sliders.priceSlider, 1);
+		(0, _sliders.removeSlide)(_sliders.priceSlider, 1);
+		(0, _sliders.removeSlide)(_sliders.priceSlider, 2);
+		(0, _sliders.removeSlide)(_sliders.priceSlider, 2);
+
+		_reducers.store.dispatch({ type: 'REMOVE_PRODUCT', id: 2 });
+		_reducers.store.dispatch({ type: 'REMOVE_PRODUCT', id: 3 });
+		_reducers.store.dispatch({ type: 'REMOVE_PRODUCT', id: 5 });
+		_reducers.store.dispatch({ type: 'REMOVE_PRODUCT', id: 6 });
+
+		// Ставим первый товар активным //
+		_reducers.store.dispatch({ type: 'INCREASE_PRODUCT', id: 1 });
+	};
+
+	closeClickHandler(event);
+});
+
+preorderButton.on('click', function (event) {
+	closeClickHandler(event);
+	(0, _modal.showModal)(_modal.preorderModal);
+});
+
+offerButton.on('click', function (event) {
+	closeClickHandler(event);
+	(0, _modal.showModal)(_modal.offerModal);
+});
 
 exports.buyButton = buyButton;
 exports.scrollerButton = scrollerButton;
 
-},{"../store/reducers":33,"jquery":5}],29:[function(require,module,exports){
+},{"../modal/modal":33,"../sliders/sliders":34,"../store/reducers":36,"jquery":5}],30:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22789,14 +22855,42 @@ var createCounter = function createCounter(value) {
 productNodes.each(function (index, node) {
 	var counter = (0, _jquery2.default)(node).find('.counter');
 	var valueField = counter.find('.counter__value');
-	var title = node.dataset.title;
+	var title = void 0;
 	var id = Number(node.dataset.id);
 	var price = Number(node.dataset.price);
 
 	var valueSubscriber = _reducers.store.subscribe(function () {
-		changeValue(valueField, getCurrentProduct(id).amount);
-		handleAppearance(getCurrentProduct(id), (0, _jquery2.default)(node));
+		var currentProduct = getCurrentProduct(id);
+
+		if (currentProduct) {
+			changeValue(valueField, currentProduct.amount);
+			handleAppearance(currentProduct, (0, _jquery2.default)(node));
+		};
 	});
+
+	switch (id) {
+		case 1:
+			title = "Nanografin RADUGA";
+			break;
+		case 2:
+			title = "Nanografin RADUGA с водк. РАДУГА";
+			break;
+		case 3:
+			title = "Nanografin RADUGA с водк. РАДУГА в подарочной упаковке";
+			break;
+		case 4:
+			title = "Nanografin RADUGA";
+			break;
+		case 5:
+			title = "Nanografin RADUGA с водк. РАДУГА";
+			break;
+		case 6:
+			title = "Nanografin RADUGA с водк. РАДУГА в подарочной упаковке";
+			break;
+		default:
+			title = "Nanografin RADUGA";
+			break;
+	};
 
 	_reducers.store.dispatch({ type: 'ADD_PRODUCT', title: title, id: id, price: price });
 });
@@ -22811,13 +22905,13 @@ productNodes.each(function (index, node) {
 	setButtonVisibility();
 });
 
-_reducers.store.dispatch({ type: 'INCREASE_PRODUCT', id: 1 });
+_reducers.store.dispatch({ type: 'INCREASE_PRODUCT', id: 2 });
 
 exports.changeProductAmount = changeProductAmount;
 exports.setButtonVisibility = setButtonVisibility;
 exports.createCounter = createCounter;
 
-},{"../store/reducers":33,"jquery":5}],30:[function(require,module,exports){
+},{"../store/reducers":36,"jquery":5}],31:[function(require,module,exports){
 'use strict';
 
 var _jquery = require('jquery');
@@ -22852,7 +22946,7 @@ var createArticle = function createArticle(product, parent) {
 
 	var wrap = (0, _jquery2.default)('<article/>').addClass('card card--thumb');
 	var box = (0, _jquery2.default)('<div/>').addClass('card__box');
-	var closeButton = (0, _jquery2.default)('<button/>').addClass('card__close');
+	var closeButton = (0, _jquery2.default)('<button/>').addClass('card__close button button--close');
 	var title = (0, _jquery2.default)('<h4/>').addClass('card__title').text(product.title);
 	var footer = (0, _jquery2.default)('<footer/>').addClass('card__footer card__footer--row');
 	var smallPrice = (0, _jquery2.default)('<p/>').addClass('card__price card__price--small').text(product.amount + ' x ' + product.price);
@@ -22901,7 +22995,7 @@ var showSum = function showSum(products) {
 	cartSum.text(sum + ' \u0440\u0443\u0431.');
 };
 
-var simplebar = new _SimpleBar2.default(document.querySelector('.form__cart'), { autoHide: false });
+var simplebar = new _SimpleBar2.default(document.querySelector('.form__cart'), { autoHide: false, wrapContent: true });
 
 _reducers.store.subscribe(function () {
 	renderProducts(getSelectedProducts(_reducers.store.getState().products));
@@ -22912,7 +23006,7 @@ _reducers.store.subscribe(function () {
 renderProducts(getSelectedProducts(_reducers.store.getState().products));
 showSum(getSelectedProducts(_reducers.store.getState().products));
 
-},{"../card/card":29,"../store/reducers":33,"SimpleBar":1,"jquery":5}],31:[function(require,module,exports){
+},{"../card/card":30,"../store/reducers":36,"SimpleBar":1,"jquery":5}],32:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -22924,6 +23018,8 @@ var _jquery2 = _interopRequireDefault(_jquery);
 require('whatwg-fetch');
 
 var _reducers = require('../../_modules/store/reducers');
+
+var _modal = require('../../_modules/modal/modal');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22963,6 +23059,11 @@ orderForm.on('submit', function (event) {
 		return _extends({}, current, _defineProperty({}, item.id, item.amount));
 	}, {});
 
+	if (Object.keys(productsData).length === 0) {
+		console.log('Нет товаров в корзине');
+		return false;
+	};
+
 	fetch('http://localhost:88/user/add', getOptions(userData)).then(function (data) {
 		return data.json();
 	}).then(function (user) {
@@ -22978,8 +23079,12 @@ orderForm.on('submit', function (event) {
 
 		fetch('http://localhost:88/order/add', getOptions(offersData)).then(function (data) {
 			return data.json();
-		}).then(function (order) {
-			return console.log(order);
+		}).then(function (_ref) {
+			var status = _ref.status,
+			    id = _ref.id;
+
+			_reducers.store.dispatch({ type: 'SET_OFFER_ID', id: id });
+			(0, _modal.showModal)(document.querySelector('.modal--thanks'));
 		}).catch(function (err) {
 			return console.log(err);
 		});
@@ -22988,7 +23093,145 @@ orderForm.on('submit', function (event) {
 	});
 });
 
-},{"../../_modules/store/reducers":33,"jquery":5,"whatwg-fetch":27}],32:[function(require,module,exports){
+},{"../../_modules/modal/modal":33,"../../_modules/store/reducers":36,"jquery":5,"whatwg-fetch":27}],33:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.offerModal = exports.preorderModal = exports.specialModal = exports.thanksModal = exports.ageModal = exports.hideModal = exports.showModal = undefined;
+
+var _SimpleBar = require('SimpleBar');
+
+var _SimpleBar2 = _interopRequireDefault(_SimpleBar);
+
+var _reducers = require('../../_modules/store/reducers');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var main = document.querySelector('.main');
+var ageModal = document.querySelector('.modal--age');
+var thanksModal = document.querySelector('.modal--thanks');
+var specialModal = document.querySelector('.modal--special');
+var preorderModal = document.querySelector('.modal--preorder');
+var offerModal = document.querySelector('.modal--offer');
+
+var updateOfferID = function updateOfferID() {
+	var offerIDNode = document.querySelector('.modal__offer-id');
+
+	offerIDNode.textContent = _reducers.store.getState().offer;
+};
+
+var showModal = function showModal(node) {
+	main.classList.add('main--blurred');
+	node.classList.add('modal--visible');
+};
+
+var hideModal = function hideModal(node) {
+	main.classList.remove('main--blurred');
+	node.classList.remove('modal--visible');
+};
+
+showModal(ageModal);
+
+document.addEventListener('mouseout', function (event) {
+	if (event.clientY < 0) {
+		hideModal(ageModal);
+		showModal(specialModal);
+	};
+});
+
+new _SimpleBar2.default(preorderModal.querySelector('.modal__block-overflow'), { autoHide: false, wrapContent: true });
+new _SimpleBar2.default(offerModal.querySelector('.modal__block-overflow'), { autoHide: false, wrapContent: true });
+
+_reducers.store.subscribe(updateOfferID);
+
+exports.showModal = showModal;
+exports.hideModal = hideModal;
+exports.ageModal = ageModal;
+exports.thanksModal = thanksModal;
+exports.specialModal = specialModal;
+exports.preorderModal = preorderModal;
+exports.offerModal = offerModal;
+
+},{"../../_modules/store/reducers":36,"SimpleBar":1}],34:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.removeSlide = exports.advantagesSlider = exports.priceSlider = exports.promoSlider = undefined;
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var promoSlider = (0, _jquery2.default)('.slider--promo').slick({
+	dots: true
+});
+
+var priceSlider = (0, _jquery2.default)('.slider--pricelist .slider__inner').slick({
+	dots: true,
+	arrow: false,
+	centerMode: true,
+	centerPadding: '20%',
+	slidesToShow: 1,
+	slidesToScroll: 1,
+	infinite: false,
+	prevArrow: '.controls__arrow--prev',
+	nextArrow: '.controls__arrow--next',
+	mobileFirst: true,
+	responsive: [{
+		breakpoint: 992,
+		settings: {
+			centerMode: false,
+			slidesToShow: 3,
+			slidesToScroll: 3,
+			dots: false,
+			arrow: true
+		}
+	}]
+});
+
+var advantagesSlider = (0, _jquery2.default)('.slider--advantages').slick({
+	dots: false,
+	arrow: false,
+	centerMode: true,
+	centerPadding: '80px',
+	slidesToShow: 1,
+	slidesToScroll: 1,
+	infinite: false,
+	mobileFirst: true,
+	responsive: [{
+		breakpoint: 992,
+		settings: {
+			centerMode: false,
+			slidesToShow: 4,
+			slidesToScroll: 1,
+			dots: false,
+			arrow: false
+		}
+	}]
+});
+
+priceSlider.on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+	var node = (0, _jquery2.default)('.slider__background');
+
+	node.css('transform', 'translateX(-' + 100 / 6 * nextSlide + '%)');
+});
+
+var removeSlide = function removeSlide(slider, id) {
+	slider.slick('slickRemove', id);
+};
+
+exports.promoSlider = promoSlider;
+exports.priceSlider = priceSlider;
+exports.advantagesSlider = advantagesSlider;
+exports.removeSlide = removeSlide;
+
+},{"jquery":5}],35:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -23040,7 +23283,7 @@ var toggleHole = function toggleHole(nextIndex) {
 exports.moveBottle = moveBottle;
 exports.toggleHole = toggleHole;
 
-},{"jquery":5}],33:[function(require,module,exports){
+},{"jquery":5}],36:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -23100,6 +23343,10 @@ var item = function item(state, _ref2) {
 			return _extends({}, state, {
 				amount: 0
 			});
+		case 'REMOVE_PRODUCT':
+			if (state.id !== id) return true;
+
+			return false;
 		default:
 			return state;
 	};
@@ -23124,6 +23371,22 @@ var products = function products() {
 			return state.map(function (product) {
 				return item(product, action);
 			});
+		case 'REMOVE_PRODUCT':
+			return state.filter(function (product) {
+				return item(product, action);
+			});
+		default:
+			return state;
+	};
+};
+
+var offer = function offer() {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+	var action = arguments[1];
+
+	switch (action.type) {
+		case 'SET_OFFER_ID':
+			return action.id;
 		default:
 			return state;
 	};
@@ -23131,14 +23394,15 @@ var products = function products() {
 
 var appReducer = (0, _redux.combineReducers)({
 	products: products,
-	button: button
+	button: button,
+	offer: offer
 });
 
 var store = (0, _redux.createStore)(appReducer);
 
 exports.store = store;
 
-},{"redux":22}],34:[function(require,module,exports){
+},{"redux":22}],37:[function(require,module,exports){
 // Main javascript entry point
 // Should handle bootstrapping/starting application
 
@@ -23152,11 +23416,15 @@ var _stage = require('../_modules/stage/stage');
 
 var _button = require('../_modules/button/button');
 
+var _modal = require('../_modules/modal/modal');
+
 require('../_modules/card/card');
 
 require('../_modules/cart/cart');
 
 require('../_modules/form/form');
+
+require('../_modules/amount/amount');
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -23229,62 +23497,8 @@ $(function () {
 
 		$.fn.fullpage.moveTo(index + 1);
 	});
-
-	$('.slider--promo').slick({
-		dots: true
-	});
-
-	$('.slider--pricelist .slider__inner').slick({
-		dots: true,
-		arrow: false,
-		centerMode: true,
-		centerPadding: '20%',
-		slidesToShow: 1,
-		slidesToScroll: 1,
-		infinite: false,
-		prevArrow: '.controls__arrow--prev',
-		nextArrow: '.controls__arrow--next',
-		mobileFirst: true,
-		responsive: [{
-			breakpoint: 992,
-			settings: {
-				centerMode: false,
-				slidesToShow: 3,
-				slidesToScroll: 3,
-				dots: false,
-				arrow: true
-			}
-		}]
-	});
-
-	$('.slider--advantages').slick({
-		dots: false,
-		arrow: false,
-		centerMode: true,
-		centerPadding: '80px',
-		slidesToShow: 1,
-		slidesToScroll: 1,
-		infinite: false,
-		mobileFirst: true,
-		responsive: [{
-			breakpoint: 992,
-			settings: {
-				centerMode: false,
-				slidesToShow: 4,
-				slidesToScroll: 1,
-				dots: false,
-				arrow: false
-			}
-		}]
-	});
-
-	$('.slider--pricelist').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
-		var node = $('.slider__background');
-
-		node.css('transform', 'translateX(-' + 100 / 6 * nextSlide + '%)');
-	});
 });
 
-},{"../_modules/button/button":28,"../_modules/card/card":29,"../_modules/cart/cart":30,"../_modules/form/form":31,"../_modules/stage/stage":32,"fullpage.js":2,"fullpage.js/vendors/scrolloverflow":3,"iscroll":4,"jquery":5,"slick-carousel":24}]},{},[34])
+},{"../_modules/amount/amount":28,"../_modules/button/button":29,"../_modules/card/card":30,"../_modules/cart/cart":31,"../_modules/form/form":32,"../_modules/modal/modal":33,"../_modules/stage/stage":35,"fullpage.js":2,"fullpage.js/vendors/scrolloverflow":3,"iscroll":4,"jquery":5,"slick-carousel":24}]},{},[37])
 
 //# sourceMappingURL=main.js.map
