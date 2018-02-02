@@ -22860,7 +22860,7 @@ var changeValue = function changeValue(node, value) {
 var createCounter = function createCounter(value) {
 	// Создаёт элемент счётчика в корзине //
 
-	var counter = (0, _jquery2.default)('<div/>').addClass('counter counter--small');
+	var counter = (0, _jquery2.default)('<div/>').addClass('counter counter--small counter--purple');
 	var coontrolMinus = (0, _jquery2.default)('<button/>').addClass('counter__control counter__control--minus').text('–');
 	var coontrolPlus = (0, _jquery2.default)('<button/>').addClass('counter__control counter__control--plus').text('+');
 	var valueField = (0, _jquery2.default)('<p/>').addClass('counter__value').text(value);
