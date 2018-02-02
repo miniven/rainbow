@@ -22676,19 +22676,33 @@ function symbolObservablePonyfill(root) {
 'use strict';
 
 var amountNode = document.querySelector('.amount');
-var INITIAL_AMOUNT = 25000;
+var amount = localStorage.amount || 23829;
 
 var addSpaceToNum = function addSpaceToNum(num) {
-				return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+	return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 };
 
-fetch('http://localhost:88/product/amount').then(function (data) {
-				return data.json();
-}).then(function (data) {
-				return amountNode.textContent = addSpaceToNum(INITIAL_AMOUNT - data.amount);
-}).catch(function () {
-				return amountNode.textContent = addSpaceToNum(INITIAL_AMOUNT);
-});
+var getRandomInt = function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+// Рандомный интервал //
+var count = function count() {
+	var interval = getRandomInt(10, 20) * 1000;
+
+	setTimeout(function () {
+		// Вычитаем рандомное число //
+		amount = amount - getRandomInt(1, 3);
+
+		localStorage.setItem('amount', amount);
+		amountNode.textContent = addSpaceToNum(amount);
+
+		count();
+	}, interval);
+};
+
+amountNode.textContent = addSpaceToNum(amount);
+count();
 
 },{}],29:[function(require,module,exports){
 'use strict';
@@ -22713,6 +22727,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var buyButton = (0, _jquery2.default)('.button--buy');
 var closeModal = (0, _jquery2.default)('.modal__close');
 var scrollerButton = (0, _jquery2.default)('.button--scroller');
+var submitSpecialButton = (0, _jquery2.default)('.form--preorder .form__submit');
 var permissionButton = (0, _jquery2.default)('.modal__button--permission');
 var preorderButton = (0, _jquery2.default)('.modal__button--preorder');
 var offerButton = (0, _jquery2.default)('.modal__button--offer');
@@ -22737,6 +22752,7 @@ var closeClickHandler = function closeClickHandler(event) {
 	var targetModal = document.querySelector(targetModalSelector);
 
 	(0, _modal.hideModal)(targetModal);
+	_reducers.store.dispatch({ type: 'ZEROIZE_PRODUCT', id: 7 });
 };
 
 handleButtonVisibility(_reducers.store.getState().button);
@@ -22873,19 +22889,19 @@ productNodes.each(function (index, node) {
 			title = "Nanografin RADUGA";
 			break;
 		case 2:
-			title = "Nanografin RADUGA с водк. РАДУГА";
+			title = "Nanografin RADUGA с напитком";
 			break;
 		case 3:
-			title = "Nanografin RADUGA с водк. РАДУГА в подарочной упаковке";
+			title = "Nanografin RADUGA с напитком в подарочной упаковке";
 			break;
 		case 4:
 			title = "Nanografin RADUGA";
 			break;
 		case 5:
-			title = "Nanografin RADUGA с водк. РАДУГА";
+			title = "Nanografin RADUGA с напитком";
 			break;
 		case 6:
-			title = "Nanografin RADUGA с водк. РАДУГА в подарочной упаковке";
+			title = "Nanografin RADUGA с напитком в подарочной упаковке";
 			break;
 		default:
 			title = "Nanografin RADUGA";
@@ -22906,6 +22922,7 @@ productNodes.each(function (index, node) {
 });
 
 _reducers.store.dispatch({ type: 'INCREASE_PRODUCT', id: 2 });
+_reducers.store.dispatch({ type: 'ADD_PRODUCT', title: 'НОВЫЙ', id: 7, price: 7000 });
 
 exports.changeProductAmount = changeProductAmount;
 exports.setButtonVisibility = setButtonVisibility;
@@ -23028,6 +23045,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var orderForm = (0, _jquery2.default)('.form--cart');
+var preorderForm = (0, _jquery2.default)('.form--preorder');
+var amountInput = (0, _jquery2.default)('.form__input--amount');
 
 var createFormBody = function createFormBody(arr, settings) {
 	return arr.reduce(function (current, item) {
@@ -23047,15 +23066,13 @@ var getOptions = function getOptions(body) {
 	};
 };
 
-orderForm.on('submit', function (event) {
-	event.preventDefault();
+var submitForm = function submitForm(event, _ref) {
+	var productsFilter = _ref.productsFilter;
 
 	var fields = (0, _jquery2.default)(event.target).find('.form__input');
 	var userData = createFormBody([].concat(_toConsumableArray(fields)), { keyName: 'name', valueName: 'value' });
 
-	var productsData = _reducers.store.getState().products.filter(function (product) {
-		return product.amount > 0;
-	}).reduce(function (current, item) {
+	var productsData = _reducers.store.getState().products.filter(productsFilter).reduce(function (current, item) {
 		return _extends({}, current, _defineProperty({}, item.id, item.amount));
 	}, {});
 
@@ -23079,18 +23096,43 @@ orderForm.on('submit', function (event) {
 
 		fetch('http://localhost:88/order/add', getOptions(offersData)).then(function (data) {
 			return data.json();
-		}).then(function (_ref) {
-			var status = _ref.status,
-			    id = _ref.id;
+		}).then(function (_ref2) {
+			var status = _ref2.status,
+			    id = _ref2.id;
 
 			_reducers.store.dispatch({ type: 'SET_OFFER_ID', id: id });
-			(0, _modal.showModal)(document.querySelector('.modal--thanks'));
+			(0, _modal.hideModal)(_modal.preorderModal);
+			(0, _modal.showModal)(_modal.thanksModal);
 		}).catch(function (err) {
 			return console.log(err);
 		});
 	}).catch(function (err) {
 		return console.log(err);
 	});
+};
+
+preorderForm.on('submit', function (event) {
+	event.preventDefault();
+	submitForm(event, { productsFilter: function productsFilter(product) {
+			return product.amount > 0 && product.id === 7;
+		} });
+});
+
+orderForm.on('submit', function (event) {
+	event.preventDefault();
+	submitForm(event, { productsFilter: function productsFilter(product) {
+			return product.amount > 0;
+		} });
+});
+
+amountInput.on('input', function (event) {
+	var amount = Number(event.target.value);
+
+	if (!isNaN(amount)) {
+		_reducers.store.dispatch({ type: 'SET_PRODUCT_AMOUNT', id: 7, amount: Number(event.target.value) });
+	} else {
+		_reducers.store.dispatch({ type: 'ZEROIZE_PRODUCT', id: 7 });
+	}
 });
 
 },{"../../_modules/modal/modal":33,"../../_modules/store/reducers":36,"jquery":5,"whatwg-fetch":27}],33:[function(require,module,exports){
@@ -23137,6 +23179,9 @@ showModal(ageModal);
 document.addEventListener('mouseout', function (event) {
 	if (event.clientY < 0) {
 		hideModal(ageModal);
+		hideModal(thanksModal);
+		hideModal(preorderModal);
+		hideModal(offerModal);
 		showModal(specialModal);
 	};
 });
@@ -23315,7 +23360,8 @@ var item = function item(state, _ref2) {
 	var type = _ref2.type,
 	    title = _ref2.title,
 	    id = _ref2.id,
-	    price = _ref2.price;
+	    price = _ref2.price,
+	    amount = _ref2.amount;
 
 	switch (type) {
 		case 'ADD_PRODUCT':
@@ -23325,6 +23371,12 @@ var item = function item(state, _ref2) {
 				price: price,
 				amount: 0
 			};
+		case 'SET_PRODUCT_AMOUNT':
+			if (state.id !== id) return state;
+
+			return _extends({}, state, {
+				amount: amount
+			});
 		case 'INCREASE_PRODUCT':
 			if (state.id !== id) return state;
 
@@ -23360,6 +23412,10 @@ var products = function products() {
 		case 'ADD_PRODUCT':
 			return [].concat(_toConsumableArray(state), [item(null, action)]);
 		case 'INCREASE_PRODUCT':
+			return state.map(function (product) {
+				return item(product, action);
+			});
+		case 'SET_PRODUCT_AMOUNT':
 			return state.map(function (product) {
 				return item(product, action);
 			});
