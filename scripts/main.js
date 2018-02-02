@@ -22731,6 +22731,7 @@ var submitSpecialButton = (0, _jquery2.default)('.form--preorder .form__submit')
 var permissionButton = (0, _jquery2.default)('.modal__button--permission');
 var preorderButton = (0, _jquery2.default)('.modal__button--preorder');
 var offerButton = (0, _jquery2.default)('.modal__button--offer');
+var letterbutton = (0, _jquery2.default)('.button--letter');
 
 var handleButtonVisibility = function handleButtonVisibility(state) {
 	if (state === 'HIDDEN') {
@@ -22788,6 +22789,11 @@ preorderButton.on('click', function (event) {
 offerButton.on('click', function (event) {
 	closeClickHandler(event);
 	(0, _modal.showModal)(_modal.offerModal);
+});
+
+letterbutton.on('click', function (event) {
+	// closeClickHandler(event);
+	(0, _modal.showModal)(_modal.letterModal);
 });
 
 exports.buyButton = buyButton;
@@ -23046,6 +23052,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var orderForm = (0, _jquery2.default)('.form--cart');
 var preorderForm = (0, _jquery2.default)('.form--preorder');
+var contactForm = (0, _jquery2.default)('.form--contact');
 var amountInput = (0, _jquery2.default)('.form__input--amount');
 
 var createFormBody = function createFormBody(arr, settings) {
@@ -23125,6 +23132,23 @@ orderForm.on('submit', function (event) {
 		} });
 });
 
+contactForm.on('submit', function (event) {
+	event.preventDefault();
+
+	var fields = (0, _jquery2.default)(event.target).find('.form__input');
+	var userData = createFormBody([].concat(_toConsumableArray(fields)), { keyName: 'name', valueName: 'value' });
+
+	fetch('http://localhost:88/user/contact', getOptions(userData)).then(function (data) {
+		return data.json();
+	}).then(function (_ref3) {
+		var status = _ref3.status;
+
+		console.log('hello', status);
+	}).catch(function (err) {
+		return console.log(err);
+	});
+});
+
 amountInput.on('input', function (event) {
 	var amount = Number(event.target.value);
 
@@ -23141,7 +23165,7 @@ amountInput.on('input', function (event) {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.offerModal = exports.preorderModal = exports.specialModal = exports.thanksModal = exports.ageModal = exports.hideModal = exports.showModal = undefined;
+exports.letterModal = exports.offerModal = exports.preorderModal = exports.specialModal = exports.thanksModal = exports.ageModal = exports.hideModal = exports.showModal = undefined;
 
 var _SimpleBar = require('SimpleBar');
 
@@ -23157,6 +23181,7 @@ var thanksModal = document.querySelector('.modal--thanks');
 var specialModal = document.querySelector('.modal--special');
 var preorderModal = document.querySelector('.modal--preorder');
 var offerModal = document.querySelector('.modal--offer');
+var letterModal = document.querySelector('.modal--contact');
 
 var updateOfferID = function updateOfferID() {
 	var offerIDNode = document.querySelector('.modal__offer-id');
@@ -23198,6 +23223,7 @@ exports.thanksModal = thanksModal;
 exports.specialModal = specialModal;
 exports.preorderModal = preorderModal;
 exports.offerModal = offerModal;
+exports.letterModal = letterModal;
 
 },{"../../_modules/store/reducers":36,"SimpleBar":1}],34:[function(require,module,exports){
 'use strict';
@@ -23309,21 +23335,26 @@ var moveBottle = function moveBottle(nextIndex) {
 };
 
 var toggleHole = function toggleHole(nextIndex) {
-	var leftShadow = coverLeft.find('.cover__shadow');
-	var rightShadow = coverRight.find('.cover__shadow');
-
 	if (nextIndex === 2) {
-		leftShadow.css('opacity', 0);
-		rightShadow.css('opacity', 0);
-		coverLeft.css('transform', 'translate(59px, 17px)');
-		coverRight.css('transform', 'translate(132px, 17px)');
-	} else {
 		leftShadow.css('opacity', 1);
 		rightShadow.css('opacity', 1);
 		coverLeft.css('transform', 'translate(0, 0)');
 		coverRight.css('transform', 'translate(192px, 0)');
+	} else {
+		leftShadow.css('opacity', 0);
+		rightShadow.css('opacity', 0);
+		coverLeft.css('transform', 'translate(59px, 17px)');
+		coverRight.css('transform', 'translate(132px, 17px)');
 	};
 };
+
+var leftShadow = coverLeft.find('.cover__shadow');
+var rightShadow = coverRight.find('.cover__shadow');
+
+coverLeft.css('transform', 'translate(59px, 17px)');
+coverRight.css('transform', 'translate(132px, 17px)');
+leftShadow.css('opacity', 0);
+rightShadow.css('opacity', 0);
 
 exports.moveBottle = moveBottle;
 exports.toggleHole = toggleHole;

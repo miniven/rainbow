@@ -2989,6 +2989,10 @@ body {
   transition: 0.7s ease;
 }
 
+.section .fp-scrollable {
+  z-index: 1;
+}
+
 .section--advantages {
   background-image: url("/images/backgrounds/advantages@2x.jpg");
   background-size: cover;
@@ -3505,7 +3509,14 @@ body {
 
 @media (min-width: 992px) {
   .stage {
-    width: 250px;
+    width: 350px;
+  }
+}
+
+@media (min-width: 2000px) {
+  .stage {
+    -webkit-transform: translateY(-20%) scale(1.4);
+            transform: translateY(-20%) scale(1.4);
   }
 }
 
@@ -3522,7 +3533,7 @@ body {
 
 .stage__hole {
   position: absolute;
-  bottom: 32%;
+  bottom: 18.5%;
   left: 0;
   right: 0;
   width: 100%;
@@ -3531,7 +3542,7 @@ body {
 
 @media (min-width: 992px) {
   .stage__hole {
-    bottom: 34.3%;
+    bottom: 22.3%;
   }
 }
 
@@ -3542,7 +3553,7 @@ body {
 
 .stage__bottle {
   position: absolute;
-  bottom: 45%;
+  bottom: 30%;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -3564,13 +3575,13 @@ body {
 }
 
 .stage .cover {
-  -webkit-transition: 0.4s ease;
-  transition: 0.4s ease;
+  -webkit-transition: 0.15s ease;
+  transition: 0.15s ease;
 }
 
 .stage .cover__shadow {
-  -webkit-transition: 0.4s ease;
-  transition: 0.4s ease;
+  -webkit-transition: 0.15s ease;
+  transition: 0.15s ease;
 }
 
 .subtitle {
@@ -4863,6 +4874,7 @@ body {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+  resize: none;
 }
 
 .form__submit {
