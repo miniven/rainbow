@@ -23092,7 +23092,7 @@ var submitForm = function submitForm(event, _ref) {
 		return false;
 	};
 
-	fetch('http://localhost:88/user/add', getOptions(userData)).then(function (data) {
+	fetch('/user/add', getOptions(userData)).then(function (data) {
 		return data.json();
 	}).then(function (user) {
 		var offerFields = [{
@@ -23105,7 +23105,7 @@ var submitForm = function submitForm(event, _ref) {
 
 		var offersData = createFormBody(offerFields, { keyName: 'key', valueName: 'value' });
 
-		fetch('http://localhost:88/order/add', getOptions(offersData)).then(function (data) {
+		fetch('/order/add', getOptions(offersData)).then(function (data) {
 			return data.json();
 		}).then(function (_ref2) {
 			var status = _ref2.status,
@@ -23142,7 +23142,7 @@ contactForm.on('submit', function (event) {
 	var fields = (0, _jquery2.default)(event.target).find('.form__input');
 	var userData = createFormBody([].concat(_toConsumableArray(fields)), { keyName: 'name', valueName: 'value' });
 
-	fetch('http://localhost:88/user/contact', getOptions(userData)).then(function (data) {
+	fetch('/user/contact', getOptions(userData)).then(function (data) {
 		return data.json();
 	}).then(function (_ref3) {
 		var status = _ref3.status;
@@ -23186,6 +23186,7 @@ var specialModal = document.querySelector('.modal--special');
 var preorderModal = document.querySelector('.modal--preorder');
 var offerModal = document.querySelector('.modal--offer');
 var letterModal = document.querySelector('.modal--contact');
+var modalTimerID = void 0;
 
 var updateOfferID = function updateOfferID() {
 	var offerIDNode = document.querySelector('.modal__offer-id');
@@ -23205,15 +23206,25 @@ var hideModal = function hideModal(node) {
 
 showModal(ageModal);
 
+// Показываем окно,  если пользователь пытается уйти //
+
 document.addEventListener('mouseout', function (event) {
 	if (event.clientY < 0) {
-		hideModal(ageModal);
-		hideModal(thanksModal);
-		hideModal(preorderModal);
-		hideModal(offerModal);
-		hideModal(letterModal);
-		showModal(specialModal);
+		modalTimerID = setTimeout(function () {
+			hideModal(ageModal);
+			hideModal(thanksModal);
+			hideModal(preorderModal);
+			hideModal(offerModal);
+			hideModal(letterModal);
+			showModal(specialModal);
+		}, 300);
 	};
+});
+
+// Очищаем таймер, если пользователь не пытался уйти, а просто случайно провел мышью вне окна //
+
+document.addEventListener('mouseover', function (event) {
+	return clearTimeout(modalTimerID);
 });
 
 new _SimpleBar2.default(preorderModal.querySelector('.modal__block-overflow'), { autoHide: false, wrapContent: true });
@@ -23571,6 +23582,7 @@ $(function () {
 		menu: '#navbar',
 		verticalCentered: false,
 		scrollOverflow: true,
+		normalScrollElements: '.cart__inner, .slider__text, .simplebar-scroll-content, .modal__block-overflow',
 		sectionSelector: '.section',
 		onLeave: function onLeave(index, nextIndex, direction) {
 			var nextSection = getSectionByIndex(nextIndex);
